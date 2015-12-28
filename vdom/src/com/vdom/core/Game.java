@@ -867,12 +867,12 @@ public class Game {
         ArrayList<Card> staysInPlayCards = new ArrayList<Card>();
         while (!player.nextTurnCards.isEmpty()) {
             Card card = player.nextTurnCards.remove(0);
-        	if(   card.equals(Cards.throneRoom)
+            if(   card.equals(Cards.throneRoom)
                || card.equals(Cards.disciple)
                || card.equals(Cards.kingsCourt)
                || card.equals(Cards.procession)
                || card.equals(Cards.bandOfMisfits))
-        	{
+            {
                 if(!player.nextTurnCards.isEmpty()) {
                   	Card nextCard = player.nextTurnCards.get(0);
                     if(nextCard.getType() == Cards.Type.Hireling || nextCard.getType() == Cards.Type.Champion) {
@@ -883,22 +883,24 @@ public class Game {
                     }
                 }
             }
-        	
-        	if(card.getType() == Cards.Type.Hireling || card.getType() == Cards.Type.Champion) {
-        		staysInPlayCards.add((DurationCard) card);
+
+            if(card.getType() == Cards.Type.Hireling || card.getType() == Cards.Type.Champion) {
+                staysInPlayCards.add((DurationCard) card);
             } else {
-	            CardImpl behaveAsCard = (CardImpl) card.behaveAsCard();
-	            behaveAsCard.cloneCount = 1;
-	            if (!behaveAsCard.trashAfterPlay) {
-	                player.playedCards.add(card);
-	            } else {
-	                behaveAsCard.trashAfterPlay = false;
-	            }
+                CardImpl behaveAsCard = (CardImpl) card.behaveAsCard();
+                behaveAsCard.cloneCount = 1;
+                if (!behaveAsCard.trashAfterPlay) {
+                    player.playedCards.add(card);
+                } else {
+                    behaveAsCard.trashAfterPlay = false;
+                }
             }
         }
         while (!staysInPlayCards.isEmpty()) {
             player.nextTurnCards.add(staysInPlayCards.remove(0));
         }
+
+        player.protectedPlayers.clear();
     }
 
     private static void printStats(HashMap<String, Double> wins, int gameCount, String gameType) {
@@ -1351,13 +1353,11 @@ public class Game {
         buy.isBuying(context);
 
         if(!buy.isEvent()) {
-        	/*frr18 todo defense */
 	        for (int i=0; i < swampHagAttacks(player); i++) {
 	            player.gainNewCard(Cards.curse, Cards.swampHag, context);                    	
 	        }
 	        
 	        if (hauntedWoodsAttacks(player)) {
-	        	/*frr18 todo defense */
 	            if(player.hand.size() > 0) {
 	                Card[] order;
 	                if (player.hand.size() == 1)
@@ -2994,12 +2994,15 @@ public class Game {
             }
         }
     }
-    
+
+    /**
+     * @param player
+     * @return true if player is attacked by hauntedWoods
+     */
     public boolean hauntedWoodsAttacks(Player player)
     {
-    	/*frr18 todo defense */
         for (Player otherPlayer : players) {
-            if (otherPlayer != null && otherPlayer != player) {
+            if (otherPlayer != null && otherPlayer != player && !otherPlayer.isProtected(player)) {
                 for (Card card : otherPlayer.nextTurnCards) {
                     if(card.equals(Cards.hauntedWoods)) {
                     	return true;
@@ -3010,17 +3013,20 @@ public class Game {
         return false;
     }
 
+    /**
+     * @param player
+     * @return Numbers of SwampHags attacking player
+     */
     public int swampHagAttacks(Player player)
     {
-    	/*frr18 todo defense */
     	int swampHags = 0;
         for (Player otherPlayer : players) {
-            if (otherPlayer != null && otherPlayer != player) {
+            if (otherPlayer != null && otherPlayer != player && !otherPlayer.isProtected(player)) {
                 for (Card card : otherPlayer.nextTurnCards) {
-                    if(card.equals(Cards.swampHag)) {                    	
-                    	swampHags += ((CardImpl) card).cloneCount;;                	
+                    if(card.equals(Cards.swampHag)) {
+                        swampHags += ((CardImpl) card).cloneCount;
                     }
-                }            	
+                }
             }
         }
         return swampHags;

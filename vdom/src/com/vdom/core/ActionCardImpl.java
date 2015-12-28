@@ -753,17 +753,17 @@ public class ActionCardImpl extends CardImpl implements ActionCard {
                 amulet(game, context, currentPlayer);
                 break;
             case Artificer:
-            	artificer(game, context, currentPlayer);
+                artificer(game, context, currentPlayer);
                 break;
             case BridgeTroll:
-            	bridgeTroll(game, context, currentPlayer);
+                bridgeTroll(game, context, currentPlayer);
                 break;
             case Disciple:
-            	disciple(game, context, currentPlayer);
+                disciple(game, context, currentPlayer);
                 break;
             case DistantLands:
             case WineMerchant:
-            	putOnTavern(game, context, currentPlayer);
+                putOnTavern(game, context, currentPlayer);
                 break;
             case Gear:
                 gear(context, currentPlayer);
@@ -790,13 +790,17 @@ public class ActionCardImpl extends CardImpl implements ActionCard {
                 soldier(game, context, currentPlayer);
                 break;
             case Storyteller:
-            	storyteller(game, context, currentPlayer);
+                storyteller(game, context, currentPlayer);
+                break;
+            case SwampHag:
+            case HauntedWoods:
+                swampHagHauntedWoods(game, context, currentPlayer);
                 break;
             case TreasureHunter:
-            	treasureHunter(game, context, currentPlayer);
+                treasureHunter(game, context, currentPlayer);
                 break;
             case Warrior:
-            	warrior(game, context, currentPlayer);
+                warrior(game, context, currentPlayer);
                 break;
             default:
                 break;
@@ -6257,6 +6261,26 @@ public class ActionCardImpl extends CardImpl implements ActionCard {
         context.gold = 0;
     }
     
+    /* Wiki: Lighthouse only protects you against Attack cards played while the Lighthouse is in play.
+     * Swamp Hag and Haunted Woods are Attack cards that affect you at a time other than when they are played,
+     * but what matters for Lighthouse is whether Lighthouse was in play when the Attack card was played,
+     * not whether it's in play when the Attack cards would have their effect on you.
+     */
+    private void swampHagHauntedWoods(Game game, MoveContext context, Player currentPlayer) {
+        for (Player player : context.game.getPlayersInTurnOrder()) {
+            if (player != currentPlayer) {
+                if(Util.isDefendedFromAttack(context.game, player, this.controlCard)) {
+                    currentPlayer.playedDefense(player);
+                }
+                else {
+                    player.attacked(this.controlCard, context);
+                    MoveContext playerContext = new MoveContext(game, player);
+                    playerContext.attackedPlayer = player;
+                }
+            }
+        }
+    }
+
     private void treasureHunter(Game game, MoveContext context, Player currentPlayer) {
         for (int i = 0; i < context.getCardsObtainedByLastPlayer().size(); i++) {
             currentPlayer.gainNewCard(Cards.silver, this, context);
@@ -6264,7 +6288,7 @@ public class ActionCardImpl extends CardImpl implements ActionCard {
     }
     
     private void warrior(Game game, MoveContext context, Player currentPlayer) {       
-    	for (Player player : context.game.getPlayersInTurnOrder()) {
+        for (Player player : context.game.getPlayersInTurnOrder()) {
             if (player != currentPlayer && !Util.isDefendedFromAttack(context.game, player, this.controlCard)) {
                 player.attacked(this.controlCard, context);
                 MoveContext playerContext = new MoveContext(game, player);

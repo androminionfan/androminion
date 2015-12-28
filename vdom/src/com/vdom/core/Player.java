@@ -54,7 +54,8 @@ public abstract class Player {
     protected CardList island;
     protected CardList haven;
     protected CardList horseTraders;
-    protected Card save;
+    protected ArrayList<Player> protectedPlayers; // for swampHag and hauntedWoods
+    protected Card save; //card set aside by event Save
     public Game game;
     public Player controlPlayer = this;
 
@@ -246,6 +247,7 @@ public abstract class Player {
         island = new CardList(this, "Island");
         haven = new CardList(this, "Haven");
         horseTraders = new CardList(this, "Horse Traders");
+        protectedPlayers = new ArrayList<Player>();
     }
 
     private List<PutBackOption> getPutBackOptions(MoveContext context, int actionsPlayed) {
@@ -795,6 +797,23 @@ public abstract class Player {
         totals.put(Cards.victoryTokens, this.getVictoryTokens());
 
         return totals;
+    }
+
+    /** For swampHag and hauntedWoods:
+     * player protects against swampHag and hauntedWoods by moat, champion or lighthouse
+     * @param player
+     */
+    public void playedDefense(Player player) {
+        if(!protectedPlayers.contains(player))
+            protectedPlayers.add(player);
+    }
+
+    /** For swampHag and hauntedWoods
+     * @param player
+     * @return true if player is protected against swampHag and hauntedWoods by moat, champion or lighthouse
+     */
+    public boolean isProtected(Player player) {
+        return protectedPlayers.contains(player);
     }
 
     public Card peekAtDeckBottom() {
