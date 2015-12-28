@@ -10,9 +10,7 @@ import com.vdom.api.ActionCard;
 import com.vdom.api.Card;
 import com.vdom.api.TreasureCard;
 import com.vdom.api.VictoryCard;
-import com.vdom.comms.Event;
 import com.vdom.comms.SelectCardOptions;
-import com.vdom.comms.Event.EType;
 import com.vdom.comms.SelectCardOptions.PickType;
 import com.vdom.comms.SelectCardOptions.ActionType;
 

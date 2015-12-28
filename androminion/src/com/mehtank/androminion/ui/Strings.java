@@ -1180,7 +1180,7 @@ public class Strings {
         actionStringMap.put(getCardName(Cards.saboteur), getString(R.string.saboteur_part));
         actionStringMap.put(getCardName(Cards.sirMichael), getString(R.string.sir_michael_part));
         actionStringMap.put(getCardName(Cards.throneRoom), getString(R.string.throne_room_part));
-        actionStringMap.put(getCardName(Cards.disciple), getString(R.string.throne_room_part)); /*frr18 todo*/
+        actionStringMap.put(getCardName(Cards.disciple), getString(R.string.throne_room_part)); /*frr18 todo correct name */
         actionStringMap.put(getCardName(Cards.tournament), getString(R.string.select_prize));
         actionStringMap.put(getCardName(Cards.university), getString(R.string.university_part));
         actionStringMap.put(getCardName(Cards.urchin), getString(R.string.urchin_keep));

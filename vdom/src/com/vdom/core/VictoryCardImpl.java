@@ -1,7 +1,5 @@
 package com.vdom.core;
 
-import java.util.ArrayList;
-
 import com.vdom.api.Card;
 import com.vdom.core.MoveContext;
 import com.vdom.api.VictoryCard;

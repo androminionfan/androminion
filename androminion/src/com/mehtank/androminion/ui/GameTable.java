@@ -35,8 +35,6 @@ import com.vdom.comms.MyCard;
 import com.vdom.comms.SelectCardOptions;
 import com.vdom.comms.SelectCardOptions.PickType;
 import com.vdom.core.Cards;
-import com.vdom.core.Player.SpiceMerchantOption;
-import com.vdom.core.Player.TorturerOption;
 
 public class GameTable extends LinearLayout implements OnItemClickListener, OnItemLongClickListener {
     @SuppressWarnings("unused")

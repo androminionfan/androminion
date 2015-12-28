@@ -2,14 +2,11 @@ package com.vdom.comms;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 import com.vdom.api.ActionCard;
 import com.vdom.api.Card;
 import com.vdom.api.TreasureCard;
-import com.vdom.api.VictoryCard;
 import com.vdom.core.Cards;
-import com.vdom.core.MoveContext;
 
 /**
  * Gives information about cards that are selected by the player from the table (piles, hand, play)
