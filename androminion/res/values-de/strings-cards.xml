@@ -559,8 +559,8 @@
     <string name="Alms_desc">Einmal pro Zug: Wenn du keine Geldkarten im Spiel hast, nimm dir eine Karte, die bis zu 4 Geld kostet.</string>
     <string name="Ball_name">Ball</string>
     <string name="Ball_desc">Take your -$1 token. Gain 2 cards each costing up to $4.</string>
-    <string name="Bonfire_name">Bonfire</string>
-    <string name="Bonfire_desc">Trash up to 2 cards you have in play.</string>
+    <string name="Bonfire_name">Freudenfeuer</string>
+    <string name="Bonfire_desc">Entsorge bis zu 2 Karten, die du im Spiel hast.</string>
     <string name="Borrow_name">Leihgabe</string>
     <string name="Borrow_desc">Einmal pro Zug: Wenn dein -1 Karte-Marker nicht auf deinem Nachziehstapel liegt, lege ihn dorthin und +1 Geld.</string>
     <string name="Expedition_name">Expedition</string>
