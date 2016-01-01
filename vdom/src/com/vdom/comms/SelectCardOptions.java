@@ -146,36 +146,34 @@ public class SelectCardOptions implements Serializable {
         return checkValid(c, 0);
     }
 
+    /* Note: This method must be synchrony with checkValid(Card c, int cost, boolean cardIsVictory) */
     public boolean checkValid(MyCard c, int cost) {
-
-        if ((maxCost >= 0) && (cost > maxCost )) return false;
+        if ((maxCost >= 0) && (cost > (c.costPotion ? maxCost : maxCostWithoutPotion))) return false;
         if ((minCost >= 0) && (cost < minCost)) return false;
 
-        if (isAction && !c.isAction) return false;
         if (isReaction && !c.isReaction) return false;
         if (isTreasure && !c.isTreasure) return false;
         if (isNonTreasure && c.isTreasure) return false;
         if (isVictory && !c.isVictory) return false;
         if (isNonVictory && c.isVictory) return false;
-        if (isAttack && !c.isAttack) return false;
-        if (isNonShelter && c.isShelter) return false;
-        if (isReaction && !c.isReaction) return false;
         if (fromPrizes && !c.isPrize) return false;
         if (fromTable && !fromPrizes && c.isPrize) return false;
-        //if (fromPrizes && !c.isPrize && !fromTable) return false;
         if (potionCost == 0 && c.costPotion) return false;
         if (maxCost == minCost && potionCost > 0 && !c.costPotion) return false;
+        if (isNonShelter && c.isShelter) return false;
+        if (isAction && !c.isAction) return false;
+        if (isAttack && !c.isAttack) return false;
         if (!cardInList(c.id)) return false;
 
         return true;
     }
-
+    
     public boolean checkValid(Card c, boolean cardIsVictory) {
         return checkValid(c, 0, cardIsVictory);
     }
 
+    /* Note: This method must be synchrony with checkValid(MyCard c, int cost) */
     public boolean checkValid(Card c, int cost, boolean cardIsVictory) {
-
         if ((maxCost >= 0) && (cost > (c.costPotion() ? maxCost : maxCostWithoutPotion))) return false;
         if ((minCost >= 0) && (cost < minCost)) return false;
 
@@ -197,7 +195,8 @@ public class SelectCardOptions implements Serializable {
         } else {
             if (isAction || isAttack) return false;
         }
-        if ((isBuyPhase || isSupplyCard) && !Cards.isSupplyCard(c) && !c.isEvent()) return false;
+        if (isBuyPhase && !Cards.isSupplyCard(c) && !c.isEvent()) return false;
+        if (isSupplyCard && !Cards.isSupplyCard(c)) return false;
 
         return true;
     }
