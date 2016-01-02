@@ -160,7 +160,7 @@ public class EventCardImpl extends CardImpl implements EventCard {
                         differentCards.add(card);
                     }
                     for (Card card : differentCards) {
-                        if(context.player.playedCards.contains(card)) {
+                        if(context.player.playedCards.contains(card) || context.player.nextTurnCards.contains(card)) {
                             context.player.gainNewCard(card, this.controlCard, context);
                         }
                         else {

@@ -3235,7 +3235,30 @@ public abstract class BasePlayer extends Player implements GameEventListener {
 
     @Override
     public Card[] pilgrimage_cardsToGain(MoveContext context) {
-        return pickOutCards(context.getPlayer().playedCards, 3, context.getPlayer().playedCards.toArray()); /*todo frr18 AI */
+        HashSet<Card> cardsToMatch = new HashSet<Card>();
+        for(int i = 0; i < 2; i++) {
+            for(Card card : (i==0 ? context.getPlayer().playedCards : context.getPlayer().nextTurnCards)) {
+                if(Cards.isSupplyCard(card) && context.getCardsLeftInPile(card) > 0) {
+                    boolean good = true;
+                    for(Card trash : getTrashCards()) {
+                        if(card.equals(trash)) {
+                            good = false;
+                            break;
+                        }
+                    }
+                    if(good) {
+                        cardsToMatch.add(card);
+                    }
+                }
+            }
+        }
+        ArrayList<Card> sorted = new ArrayList<Card>();
+        sorted.addAll(cardsToMatch);
+        Collections.sort(sorted, Collections.reverseOrder(new Util.CardCostComparator()));
+        CardList s = new CardList(context.getPlayer(), context.getPlayer().getPlayerName());
+        for(Card c : sorted)
+            s.add(c);
+        return pickOutCards(s, 3, s.toArray());
     }
 
     @Override
