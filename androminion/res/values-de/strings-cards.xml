@@ -477,7 +477,7 @@
     <string name="StoneMason_desc">Entsorge eine Karte aus deiner Hand. Nimm 2 Karten, die jeweils weniger als die entsorgte Karte kosten.\nWenn du diese Karte kaufst, darfst du mehr dafür zahlen. Falls du das tust, nimmst du 2 Aktionskarten, die jeweils so viel kosten, wie du zusätzlich bezahlt hast.</string>
     <string name="Taxman_name">Steuereintreiber</string>
     <string name="Taxman_desc">Du darfst eine Geldkarte aus deiner Hand entsorgen. Jeder Mitspieler mit 5 oder mehr Karten auf der Hand muss die gleiche Karte ablegen (oder zeigt seine Handkarten ohne die entsprechende Karte). Nimm dir eine Geldkarte, die bis zu 3 Geld mehr kostet als die entsorgte Karte und lege sie auf deinen Nachziehstapel.</string>
-    
+
     <string name="Amulet_name">Amulet</string>
     <string name="Amulet_desc">Jetzt und zu Beginn deines nächsten Zuges, wähle jeweils eins: +1 Geld oder entsorge 1 Handkarte oder nimm dir 1 Silber.</string>
     <string name="Artificer_name">Kunsthandwerker</string>
@@ -554,7 +554,7 @@
     <string name="Warrior_desc">Für jeden Reisenden (inkl. diesem), den du im Spiel hast, müssen alle Mitspieler die oberste Karte ihres Nachziehstapels ablegen und sie entsorgen, wenn sie 3 oder 4 Geld kostet.\nIst diese Karte im Spiel, darfst du sie gegen einen Helden eintauschen anstatt sie abzulegen. (Diese Karte gehört nicht zum Vorrat.)</string>
     <string name="WineMerchant_name">Weinhändler</string>
     <string name="WineMerchant_desc">Lege diese Karte auf dein Wirtshaustableau.\nWenn du am Ende deiner Kaufphase mindestens 2 Geld nicht ausgegeben hast, darfst du diese Karte von deinem Tableau ablegen.</string>
-    
+
     <string name="Alms_name">Almosen</string>
     <string name="Alms_desc">Einmal pro Zug: Wenn du keine Geldkarten im Spiel hast, nimm dir eine Karte, die bis zu 4 Geld kostet.</string>
     <string name="Ball_name">Ball</string>
@@ -593,9 +593,9 @@
     <string name="Trade_desc">Entsorge bis zu 2 Handkarten. Nimm dir für jede entsorgte Karte ein Silber.</string>
     <string name="Training_name">Training</string>
     <string name="Training_desc">Move your +$1 token to an Action Supply pile (when you play a card from that pile, you first get +$1).</string>
-    <string name="TravellingFair_name">TravellingFair</string>
-    <string name="TravellingFair_desc">When you gain a card this turn, you may put it on top of your deck.</string>
-    
+    <string name="TravellingFair_name">Wanderzirkus</string>
+    <string name="TravellingFair_desc">Wenn du in diesem Zug eine Karte nimmst, darfst du sie auf deinen Nachziehstapel legen.</string>
+
     <string name="Envoy_name">Gesandter</string>
     <string name="Envoy_desc">Decke die obersten 5 Karten von deinem Nachziehstapel auf. Der Spieler links von dir wählt eine der aufgedeckten Karten aus. Lege die gewählte Karte ab. Nimm die übrigen Karten auf die Hand.</string>
     <string name="Governor_name">Gouverneur</string>

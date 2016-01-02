@@ -877,7 +877,7 @@ public class Strings {
             strings[0] = format(R.string.card_revealed, extras[0], cardNames);
             strings[1] = getString(R.string.top_of_deck);
             strings[2] = getString(R.string.discard);
-        } else if (cardName.equals(getCardName(Cards.royalSeal))) {
+        } else if (cardName.equals(getCardName(Cards.royalSeal)) || cardName.equals(getCardName(Cards.travellingFair))) {
             strings[0] = getCardRevealedHeader(extras);
             strings[1] = getString(R.string.top_of_deck);
             strings[2] = getString(R.string.take_normal);

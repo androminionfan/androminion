@@ -1171,14 +1171,14 @@ public abstract class IndirectPlayer extends QuickPlayPlayer {
     }
 
     @Override
-    public boolean royalSeal_shouldPutCardOnDeck(MoveContext context, Card card) {
-        if(context.isQuickPlay() && shouldAutoPlay_royalSeal_shouldPutCardOnDeck(context, card)) {
-            return super.royalSeal_shouldPutCardOnDeck(context, card);
+    public boolean royalSealTravellingFair_shouldPutCardOnDeck(MoveContext context, Card responsible, Card card) {
+        if(context.isQuickPlay() && shouldAutoPlay_royalSealTravellingFair_shouldPutCardOnDeck(context, responsible, card)) {
+            return super.royalSealTravellingFair_shouldPutCardOnDeck(context, responsible, card);
         }
         Object[] extras = new Object[2];
-        extras[0] = Cards.royalSeal;
+        extras[0] = responsible; /* royalSeal or travellingFair */
         extras[1] = card;
-        return selectBoolean(context, Cards.royalSeal, extras);
+        return selectBoolean(context, responsible, extras);
     }
 
     @Override

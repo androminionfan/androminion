@@ -1497,7 +1497,7 @@ public abstract class BasePlayer extends Player implements GameEventListener {
     }
 
     @Override
-    public boolean royalSeal_shouldPutCardOnDeck(MoveContext context, Card card) {
+    public boolean royalSealTravellingFair_shouldPutCardOnDeck(MoveContext context, Card responsible, Card card) {
         if(isOnlyVictory(card)) {
             return false;
         }

@@ -469,7 +469,7 @@ public abstract class QuickPlayPlayer extends BasePlayer {
     }
 
     
-    public boolean shouldAutoPlay_royalSeal_shouldPutCardOnDeck(MoveContext context, Card card) {
+    public boolean shouldAutoPlay_royalSealTravellingFair_shouldPutCardOnDeck(MoveContext context, Card responsible, Card card) {
         return true;
     }
 

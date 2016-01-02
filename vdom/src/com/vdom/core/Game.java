@@ -2376,7 +2376,9 @@ public class Game {
                     }
 
                     if(!handled) {
-                        if (context.isRoyalSealInPlay() && context.player.controlPlayer.royalSeal_shouldPutCardOnDeck((MoveContext) context, event.card)) {
+                        if (context.isRoyalSealInPlay() && context.player.controlPlayer.royalSealTravellingFair_shouldPutCardOnDeck((MoveContext) context, Cards.royalSeal, event.card)) {
+                            player.putOnTopOfDeck(event.card, context, true);
+                        } else if (context.travellingFairBought && context.player.controlPlayer.royalSealTravellingFair_shouldPutCardOnDeck((MoveContext) context, Cards.travellingFair, event.card)) {
                             player.putOnTopOfDeck(event.card, context, true);
                         } else if (event.card.equals(Cards.nomadCamp)) {
                             player.putOnTopOfDeck(event.card, context, true);

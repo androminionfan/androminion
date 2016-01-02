@@ -32,7 +32,6 @@ public class Cards {
     static final String KNIGHTS_TEXT = "Each other player reveals the top 2 cards of his deck, " +
             "trashes one of them costing from 3 to 6 coins, and discards the rest. If a Knight " +
             "is trashed by this, trash this card.";
-    static final String TRAVELLERS_TEXT = "TRAVELLERS_TEXT.";
 
     public enum Type {
         // Kingdom Cards
