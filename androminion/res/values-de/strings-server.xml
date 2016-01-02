@@ -78,6 +78,7 @@
     <string name="select_one_card_from_played">%1$s eine Karte, die du im Spiel hast</string>
     <string name="select_up_to_x_cards_from_played">%2$s bis zu %1$s Karten, die du im Spiel hast</string>
     <string name="select_exactly_x_cards_from_played">%2$s genau %1$s Karten, die du im Spiel hast</string>
+    <string name="select_up_to_x_different_cards_from_played">%2$s bis zu %1$s Karten mit unterschiedlichem Namen, die du im Spiel hast.</string>
 
     <string name="reaction_query">Wähle Reaktionskarte zum Zeigen</string>
     <string name="bane_option_one">Zeige Bannkarte (%1$s)</string>

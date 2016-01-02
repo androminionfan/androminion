@@ -3228,8 +3228,14 @@ public abstract class BasePlayer extends Player implements GameEventListener {
         return wineMerchantTotal;
     }
     
+    @Override
     public Card[] bonfire_cardsToTrash(MoveContext context) {
         return pickOutCards(context.getPlayer().playedCards, 2, getTrashCards());
+    }
+
+    @Override
+    public Card[] pilgrimage_cardsToGain(MoveContext context) {
+        return pickOutCards(context.getPlayer().playedCards, 3, context.getPlayer().playedCards.toArray()); /*todo frr18 AI */
     }
 
     @Override
@@ -3240,6 +3246,7 @@ public abstract class BasePlayer extends Player implements GameEventListener {
         return lowestCard(context, cl, true);
     }
 
+    @Override
     public Card[] trade_cardsToTrash(MoveContext context) {
         return pickOutCards(context.getPlayer().getHand(), 2, getTrashCards());
     }

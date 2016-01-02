@@ -1730,6 +1730,7 @@ public abstract class Player {
     public abstract boolean miser_shouldTakeTreasure(MoveContext context);
     public abstract int cleanup_wineMerchantToDiscard(MoveContext context, int wineMerchantTotal);
     public abstract Card[] bonfire_cardsToTrash(MoveContext context);
+    public abstract Card[] pilgrimage_cardsToGain(MoveContext context);
     public abstract Card[] trade_cardsToTrash(MoveContext context);
 
     

@@ -825,16 +825,21 @@ public abstract class QuickPlayPlayer extends BasePlayer {
         return true;
     }
 
-    public boolean shouldAutoPlay_traveller_shouldExchange(MoveContext context, Card traveller, Card exchange) {
-        return true;
+    public boolean shouldAutoPlay_pilgrimage_cardsToGain(MoveContext context) {
+        return false;
     }
 
-    public boolean shouldAutoPlay_cleanup_wineMerchantToDiscard(MoveContext context) {
+    public boolean shouldAutoPlay_traveller_shouldExchange(MoveContext context, Card traveller, Card exchange) {
         return true;
     }
 
     public boolean shouldAutoPlay_scoutingParty_cardToDiscard(MoveContext context) {
         return false;
     }
+
+    public boolean shouldAutoPlay_cleanup_wineMerchantToDiscard(MoveContext context) {
+        return true;
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.vdom.core;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import com.vdom.api.Card;
 import com.vdom.api.EventCard;
@@ -9,7 +10,7 @@ import com.vdom.api.TreasureCard;
 public class EventCardImpl extends CardImpl implements EventCard {
     protected int addBuys;
 
-	protected EventCardImpl(Builder builder) {
+    protected EventCardImpl(Builder builder) {
         super(builder);
         addBuys = builder.addBuys;
     }
@@ -69,6 +70,9 @@ public class EventCardImpl extends CardImpl implements EventCard {
             case Expedition:
                 context.totalExpeditionBoughtThisTurn += 2;
                 break;
+            case Pilgrimage:
+                pilgrimage(context);
+                break;
             case Raid:
                 raid(context);
                 break;
@@ -87,11 +91,11 @@ public class EventCardImpl extends CardImpl implements EventCard {
     }
 
     public void alms(MoveContext context) {
-    	boolean noTreasureCard = true;
+        boolean noTreasureCard = true;
         for(Card card : context.player.playedCards) {
             if (card instanceof TreasureCard) {
-            	noTreasureCard = false;
-            	break;
+                noTreasureCard = false;
+                break;
             }
         }
         if (noTreasureCard) {
@@ -144,6 +148,31 @@ public class EventCardImpl extends CardImpl implements EventCard {
         context.cantBuy.add(this); //once per turn
     }
     
+    private void pilgrimage(MoveContext context) {
+        if(context.player.flipJourneyToken(context)) {
+            Card[] cards = context.player.controlPlayer.pilgrimage_cardsToGain(context);
+            if (cards != null) {
+                if (cards.length > 3) {
+                    Util.playerError(context.player, "Pilgrimage gain error, trying to gain too many cards, ignoring.");
+                } else {
+                    HashSet<Card> differentCards = new HashSet<Card>();
+                    for (Card card : cards) {
+                        differentCards.add(card);
+                    }
+                    for (Card card : differentCards) {
+                        if(context.player.playedCards.contains(card)) {
+                            context.player.gainNewCard(card, this.controlCard, context);
+                        }
+                        else {
+                            Util.playerError(context.player, "Pilgrimage gain error, card not in play, ignoring.");
+                        }
+                    }
+                }
+            }
+        }
+        context.cantBuy.add(this); //once per turn
+    }
+
     protected void raid(MoveContext context) {
         for(Card card : context.player.playedCards) {
             if (card.equals(Cards.silver)) {
@@ -153,7 +182,7 @@ public class EventCardImpl extends CardImpl implements EventCard {
         for (Player targetPlayer : context.game.getPlayersInTurnOrder()) {
             if (targetPlayer != context.player) {
                 MoveContext targetContext = new MoveContext(context.game, targetPlayer);
-            	targetPlayer.setMinusOneCardToken(true, targetContext);
+                targetPlayer.setMinusOneCardToken(true, targetContext);
             }
         }
     }
@@ -166,8 +195,8 @@ public class EventCardImpl extends CardImpl implements EventCard {
         }
 
         if (card != null) {
-        	context.player.hand.remove(card);
-        	context.player.save = card;
+            context.player.hand.remove(card);
+            context.player.save = card;
         }
         context.cantBuy.add(this); //once per turn
     }
@@ -186,60 +215,60 @@ public class EventCardImpl extends CardImpl implements EventCard {
         }
 
         for (int i = 0; i < 3; i++) {
-        	if(cards.size() > 0) {
-	        	Card toDiscard = null;
-	        	if(cards.size() > 3-i) {
-	        		toDiscard = context.player.scoutingParty_cardToDiscard(context, cards.toArray(new Card[cards.size()]));
-		        } else {
-		            toDiscard = cards.get(0);
-		        }
-	        	
-		        if (toDiscard == null || !cards.contains(toDiscard)) {
-		            Util.playerError(context.player, "ScoutingParty discard error, just picking the first card.");
-		            toDiscard = cards.get(0);
-		        }
-		
-		        context.player.discard(toDiscard, this.controlCard, context);
-		
-		        cards.remove(toDiscard);
-        	}
+            if(cards.size() > 0) {
+                Card toDiscard = null;
+                if(cards.size() > 3-i) {
+                    toDiscard = context.player.scoutingParty_cardToDiscard(context, cards.toArray(new Card[cards.size()]));
+                } else {
+                    toDiscard = cards.get(0);
+                }
+
+                if (toDiscard == null || !cards.contains(toDiscard)) {
+                    Util.playerError(context.player, "ScoutingParty discard error, just picking the first card.");
+                    toDiscard = cards.get(0);
+                }
+
+                context.player.discard(toDiscard, this.controlCard, context);
+
+                cards.remove(toDiscard);
+            }
         }
 
         if (cards.size() > 0) {
-        	Card[] order = context.player.controlPlayer.survivors_cardOrder(context, cards.toArray(new Card[cards.size()]));
+            Card[] order = context.player.controlPlayer.survivors_cardOrder(context, cards.toArray(new Card[cards.size()]));
 
-	        // Check that they returned the right cards
-	        boolean bad = false;
-	
-	        if (order == null) {
-	            bad = true;
-	        } else {
-	            ArrayList<Card> copy = new ArrayList<Card>();
-	            for (Card card : cards) {
-	                copy.add(card);
-	            }
-	
-	            for (Card card : order) {
-	                if (!copy.remove(card)) {
-	                    bad = true;
-	                    break;
-	                }
-	            }
-	
-	            if (!copy.isEmpty()) {
-	                bad = true;
-	            }
-	        }
-	
-	        if (bad) {
-	            Util.playerError(context.player, "Survivors order cards error, ignoring.");
-	            order = cards.toArray(new Card[cards.size()]);
-	        }
-	
-	        // Put the cards back on the deck
-	        for (int i = order.length - 1; i >= 0; i--) {
-	        	context.player.putOnTopOfDeck(order[i]);
-	        }
+            // Check that they returned the right cards
+            boolean bad = false;
+
+            if (order == null) {
+                bad = true;
+            } else {
+                ArrayList<Card> copy = new ArrayList<Card>();
+                for (Card card : cards) {
+                    copy.add(card);
+                }
+
+                for (Card card : order) {
+                    if (!copy.remove(card)) {
+                        bad = true;
+                        break;
+                    }
+                }
+
+                if (!copy.isEmpty()) {
+                    bad = true;
+                }
+            }
+
+            if (bad) {
+                Util.playerError(context.player, "Survivors order cards error, ignoring.");
+                order = cards.toArray(new Card[cards.size()]);
+            }
+
+            // Put the cards back on the deck
+            for (int i = order.length - 1; i >= 0; i--) {
+                context.player.putOnTopOfDeck(order[i]);
+            }
         }        
     }
     

@@ -62,13 +62,16 @@ public abstract class IndirectPlayer extends QuickPlayPlayer {
     
     private Card[] getFromHandOrPlayed(boolean fromTheHand, MoveContext context, SelectCardOptions sco) {
         CardList localHand = (context.player.isPossessed()) ? context.player.getHand() : getHand();
-    	if (fromTheHand) {
+        if (fromTheHand) {
             sco = sco.fromHand();
-    	} else {
-    		localHand = context.player.playedCards;
-    		sco = sco.fromPlayed();
-    	}
-    	
+        } else {
+            localHand = context.player.playedCards;
+            for (Card card : context.player.nextTurnCards) {
+                localHand.add(card);
+            }
+            sco = sco.fromPlayed();
+        }
+
         if (localHand.size() == 0) {
             return null;
         } else if (sco.count == Integer.MAX_VALUE) {
@@ -134,7 +137,7 @@ public abstract class IndirectPlayer extends QuickPlayPlayer {
 
         for (Card card : cards) {
             if (   !(card.isEvent() && sco.cardResponsible != null && sco.cardResponsible.equals(Cards.contraband) )
-            	&& (sco.allowEmpty || !context.game.isPileEmpty(card))) {
+                && (sco.allowEmpty || !context.game.isPileEmpty(card))) {
                 if (   sco.checkValid(card, card.getCost(context), card.isVictory(context))
                     && (   !context.cantBuy.contains(card)
                         || !sco.pickType.equals(PickType.BUY))
@@ -2636,6 +2639,17 @@ public abstract class IndirectPlayer extends QuickPlayPlayer {
         SelectCardOptions sco = new SelectCardOptions().setCount(2)
                 .setPassable().setPickType(PickType.TRASH)
                 .setCardResponsible(Cards.bonfire).setActionType(ActionType.TRASH);
+        return getFromPlayed(context, sco);
+    }
+
+    @Override
+    public Card[] pilgrimage_cardsToGain(MoveContext context) {
+        if(context.isQuickPlay() && shouldAutoPlay_pilgrimage_cardsToGain(context)) {
+            return super.pilgrimage_cardsToGain(context);
+        }
+        SelectCardOptions sco = new SelectCardOptions().setCount(3).setDifferent()
+                .setPassable().setPickType(PickType.SELECT)
+                .setCardResponsible(Cards.pilgrimage).setActionType(ActionType.GAIN);
         return getFromPlayed(context, sco);
     }
 

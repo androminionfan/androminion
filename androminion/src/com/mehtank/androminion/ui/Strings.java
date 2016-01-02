@@ -1055,8 +1055,12 @@ public class Strings {
                 str = Strings.format(R.string.select_one_card_from_played, header);
             else if(sco.exactCount)
                 str = Strings.format(R.string.select_exactly_x_cards_from_played, "" + sco.count, header);
-            else
-                str = Strings.format(R.string.select_up_to_x_cards_from_played, "" + sco.count, header);
+            else {
+                if(sco.different)
+                    str = Strings.format(R.string.select_up_to_x_different_cards_from_played, "" + sco.count, header);
+                else
+                    str = Strings.format(R.string.select_up_to_x_cards_from_played, "" + sco.count, header);
+            }
             return str;
         }
         throw new RuntimeException("SelectCardOptions isn't from table or from hand or from played...");
@@ -1156,6 +1160,7 @@ public class Strings {
             getCardName(Cards.artificer),
             getCardName(Cards.bonfire),
             getCardName(Cards.dungeon),
+            getCardName(Cards.pilgrimage),
             getCardName(Cards.storyteller),
             getCardName(Cards.trade),
             getCardName(Cards.treasureTrove)
