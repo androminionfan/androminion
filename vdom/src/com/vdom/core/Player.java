@@ -1000,8 +1000,15 @@ public abstract class Player {
 
         // XXX making game slow; is this necessary?  For that matter, are discarded cards public?
         if(context != null && (commandedDiscard || exchange != null)) {
-            GameEvent event = new GameEvent(GameEvent.Type.CardDiscarded, context);
-            event.card = (exchange != null ? exchange : card);
+            GameEvent event;
+            if(exchange != null) {
+                event = new GameEvent(GameEvent.Type.TravellerExchanged, context);
+                event.card = (exchange);
+            }
+            else {
+                event = new GameEvent(GameEvent.Type.CardDiscarded, context);
+                event.card = (card);
+            }
             event.responsible = responsible;
             event.setPlayer(this);
             context.game.broadcastEvent(event);
@@ -1723,6 +1730,7 @@ public abstract class Player {
     public abstract boolean miser_shouldTakeTreasure(MoveContext context);
     public abstract int cleanup_wineMerchantToDiscard(MoveContext context, int wineMerchantTotal);
     public abstract Card[] bonfire_cardsToTrash(MoveContext context);
+    public abstract Card[] trade_cardsToTrash(MoveContext context);
 
     
     

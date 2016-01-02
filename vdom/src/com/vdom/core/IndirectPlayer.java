@@ -2652,5 +2652,16 @@ public abstract class IndirectPlayer extends QuickPlayPlayer {
         return cards[selectOption(context, Cards.scoutingParty, options)];
     }
 
+    @Override
+    public Card[] trade_cardsToTrash(MoveContext context) {
+        if(context.isQuickPlay() && shouldAutoPlay_chapel_cardsToTrash(context)) {
+            return super.trade_cardsToTrash(context);
+        }
+        SelectCardOptions sco = new SelectCardOptions().setCount(2)
+                .setPassable().setPickType(PickType.TRASH)
+                .setCardResponsible(Cards.trade).setActionType(ActionType.TRASH);
+        return getFromHand(context, sco);
+    }
+
 
 }

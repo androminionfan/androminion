@@ -584,6 +584,9 @@ public class VDomPlayerPatrick extends BasePlayer {
 			money += (Util.getCardCount(list, Cards.foolsGold) - 1) * 3;
 		}
 
+		if(getMinusOneCoinToken() && money > 0)
+			money--;
+		
 		return money;
 	}
 	/**

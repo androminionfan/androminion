@@ -43,12 +43,13 @@ public class GameEvent {
         CardSetAsideOnTavernMat, // A card was set aside on tavern mat
         CardSetAsideOnIslandMat, // A card was set aside on island mat
         DeckPutIntoDiscardPile, // Deck put into discard pile
+        TravellerExchanged, // traveller exchanged
         TurnJourneyTokenFaceUp, // journey token turned face up
         TurnJourneyTokenFaceDown, // journey token turned face down
-        MinusOneCoinTokenOn, // journey token turned face up
-        MinusOneCoinTokenOff, // journey token turned face down
-        MinusOneCardTokenOn, // journey token turned face up
-        MinusOneCardTokenOff, // journey token turned face down
+        MinusOneCoinTokenOn, // -1 coin token placed
+        MinusOneCoinTokenOff, // -1 coin token removed
+        MinusOneCardTokenOn, // -1 card token put onto deck
+        MinusOneCardTokenOff, // -1 card token removed
     }
 
     public Type type;

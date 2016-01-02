@@ -54,26 +54,32 @@ public class EventCardImpl extends CardImpl implements EventCard {
     public void isBuying(MoveContext context) {
         context.buys += addBuys;
         switch (this.controlCard.getType()) {
-	        case Alms:
-	        	alms(context);
+            case Alms:
+                alms(context);
                 break;
-	        case Bonfire:
-	        	bonfire(context);
+            case Ball:
+                ball(context);
                 break;
-	        case Borrow:
-	        	borrow(context);
+            case Bonfire:
+                bonfire(context);
                 break;
-	        case Expedition:
-	        	context.totalExpeditionBoughtThisTurn += 2;
+            case Borrow:
+                borrow(context);
                 break;
-	        case Raid:
-	        	raid(context);
+            case Expedition:
+                context.totalExpeditionBoughtThisTurn += 2;
                 break;
-	        case Save:
-	        	save(context);
+            case Raid:
+                raid(context);
+                break;
+            case Save:
+                save(context);
                 break;
             case ScoutingParty:
-            	scoutingParty(context);
+                scoutingParty(context);
+                break;
+            case Trade:
+                trade(context);
                 break;
             default:
                 break;
@@ -89,16 +95,28 @@ public class EventCardImpl extends CardImpl implements EventCard {
             }
         }
         if (noTreasureCard) {
-	        Card card = context.player.controlPlayer.workshop_cardToObtain(context); /*frr18 todo right name*/
-	        if (card != null) {
-	            if (card.getCost(context) <= 4) {
-	            	context.player.gainNewCard(card, this.controlCard, context);
-	            }
-	        }
+            Card card = context.player.controlPlayer.workshop_cardToObtain(context); /*frr18 todo right name*/
+            if (card != null) {
+                if (card.getCost(context) <= 4) {
+                    context.player.gainNewCard(card, this.controlCard, context);
+                }
+            }
         }
         context.cantBuy.add(this); //once per turn
     }
-    
+
+    protected void ball(MoveContext context) {
+        context.player.setMinusOneCoinToken(true, context);
+        for (int i = 0; i < 2; i++) {
+            Card card = context.player.controlPlayer.workshop_cardToObtain(context); /*frr18 todo right name*/
+            if (card != null) {
+                if (card.getCost(context) <= 4) {
+                    context.player.gainNewCard(card, this.controlCard, context);
+                }
+            }
+        }
+    }
+
     private void bonfire(MoveContext context) {
         Card[] cards = context.player.controlPlayer.bonfire_cardsToTrash(context);
         if (cards != null) {
@@ -119,12 +137,12 @@ public class EventCardImpl extends CardImpl implements EventCard {
     }
     
     protected void borrow(MoveContext context) {
-    	if (!context.player.getMinusOneCardToken()) {
-    		context.player.setMinusOneCardToken(true, context);
-    		context.addGold += 1;
-    	}
+        if (!context.player.getMinusOneCardToken()) {
+            context.player.setMinusOneCardToken(true, context);
+            context.addGold(1);
+        }
         context.cantBuy.add(this); //once per turn
-    }    
+    }
     
     protected void raid(MoveContext context) {
         for(Card card : context.player.playedCards) {
@@ -138,7 +156,7 @@ public class EventCardImpl extends CardImpl implements EventCard {
             	targetPlayer.setMinusOneCardToken(true, targetContext);
             }
         }
-    }    
+    }
     
     private void save(MoveContext context) {
         Card card = context.player.controlPlayer.haven_cardToSetAside(context); /*frr18 todo right name*/
@@ -225,6 +243,26 @@ public class EventCardImpl extends CardImpl implements EventCard {
         }        
     }
     
-    
-    
+    private void trade(MoveContext context) {
+        Card[] cards = context.player.controlPlayer.trade_cardsToTrash(context);
+        if (cards != null) {
+            if (cards.length > 2) {
+                Util.playerError(context.player, "Trade trash error, trying to trash too many cards, ignoring.");
+            } else {
+                for (Card card : cards) {
+                    for (int i = 0; i < context.player.hand.size(); i++) {
+                        Card inHand = context.player.hand.get(i);
+                        if (inHand.equals(card)) {
+                            context.player.trash(context.player.hand.remove(i, false), this.controlCard, context);
+                            context.player.gainNewCard(Cards.silver, this, context);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
 }

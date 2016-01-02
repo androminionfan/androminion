@@ -405,7 +405,7 @@ public class Game {
             if (numTokensToSpend > 0 && numTokensToSpend <= coinTokenTotal)
             {
                 player.spendGuildsCoinTokens(numTokensToSpend);
-                context.addGold += numTokensToSpend;
+                context.addGold(numTokensToSpend);
                 if(numTokensToSpend > 0)
                 {
                     GameEvent event = new GameEvent(GameEvent.Type.GuildsTokenSpend, context);
@@ -827,14 +827,14 @@ public class Game {
                 broadcastEvent(event);
 
                 context.actions += thisCard.getAddActionsNextTurn();
-                context.addGold += thisCard.getAddGoldNextTurn();
+                context.addGold(thisCard.getAddGoldNextTurn());
                 context.buys += thisCard.getAddBuysNextTurn();
                 int addCardsNextTurn = thisCard.getAddCardsNextTurn();
 
                 /* addCardsNextTurn are displayed like addCards but sometimes the text differs */
                 if (thisCard.getType() == Cards.Type.Tactician) {
                     context.actions += 1;
-                    context.addGold += 0;
+                    context.addGold(0);
                     context.buys += 1;
                     addCardsNextTurn = 5;
                 }

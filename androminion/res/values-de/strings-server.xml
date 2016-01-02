@@ -130,6 +130,7 @@
     <string name="CardSetAside">Karte beiseite gelegt (Prinz)</string>
     <string name="CardSetAsideOnIslandMat">Karte auf Insel-Tableau gelegt</string>
     <string name="DeckPutIntoDiscardPile">Nachziehstapel auf Ablagestapel gelegt</string>
+    <string name="TravellerExchanged">Reisender ausgetauscht in</string>
     <string name="TurnJourneyTokenFaceUp">Reise-Marker auf Vorderseite gedreht</string>
     <string name="TurnJourneyTokenFaceDown">Reise-Marker auf Rückseite gedreht</string>
     <string name="MinusOneCoinTokenOn">-1 Geld-Marker vor sich platziert</string>

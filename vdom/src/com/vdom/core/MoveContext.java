@@ -82,6 +82,22 @@ public class MoveContext {
         return Game.quickPlay;
     }
 
+    public int addGold(int coins) {
+        if(coins > 0 && player.getMinusOneCoinToken()) {
+            coins--;
+            player.setMinusOneCoinToken(false, this);
+        }
+        return (addGold += coins);
+    }
+
+    public int gold(int coins) {
+        if(coins > 0 && player.getMinusOneCoinToken()) {
+            coins--;
+            player.setMinusOneCoinToken(false, this);
+        }
+        return (gold += coins);
+    }
+
     public int getPotions() {
         return potions;
     }

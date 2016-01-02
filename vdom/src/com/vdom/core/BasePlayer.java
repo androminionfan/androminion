@@ -116,40 +116,42 @@ public abstract class BasePlayer extends Player implements GameEventListener {
 
     //taken from MoveContext.getCoinForStatus()
     protected int getCoinEstimate(MoveContext context) {
-       int coin = 0;
-       int treasurecards = 0;
-       int foolsgoldcount = 0;
-       int bankcount = 0;
-       int venturecount = 0;
-       for (Card card : context.player.getHand()) {
-           if (card instanceof TreasureCard) {
-               coin += ((TreasureCard) card).getValue();
-               if (card.getType() != Cards.Type.Spoils) {
-                   treasurecards++;
-               }
-           if (card.getType() == Cards.Type.FoolsGold) {
-                   foolsgoldcount++;
-                   if (foolsgoldcount > 1) {
-                       coin += 3;
-                   }
-               }
-               if (card.getType() == Cards.Type.PhilosophersStone) {
-                   coin += (context.player.getDeckSize() + context.player.getDiscardSize()) / 5;
-               }
-               if (card.getType() == Cards.Type.Bank) {
-                   bankcount++;
-               }
-               if (card.getType() == Cards.Type.Venture) {
-                   venturecount++;
-                   coin += 1; //estimate: could draw potion or hornOfPlenty but also platinum
-                              //Patrick estimates in getCurrencyTotal(list) coin += 1
-               }
-           }
-       }
-       coin += bankcount * (treasurecards + venturecount) - (bankcount*bankcount + bankcount) / 2;
-       coin += context.player.getGuildsCoinTokenCount();
+        int coin = 0;
+        int treasurecards = 0;
+        int foolsgoldcount = 0;
+        int bankcount = 0;
+        int venturecount = 0;
+        for (Card card : context.player.getHand()) {
+            if (card instanceof TreasureCard) {
+                coin += ((TreasureCard) card).getValue();
+                if (card.getType() != Cards.Type.Spoils) {
+                    treasurecards++;
+                }
+            if (card.getType() == Cards.Type.FoolsGold) {
+                    foolsgoldcount++;
+                    if (foolsgoldcount > 1) {
+                        coin += 3;
+                    }
+                }
+                if (card.getType() == Cards.Type.PhilosophersStone) {
+                    coin += (context.player.getDeckSize() + context.player.getDiscardSize()) / 5;
+                }
+                if (card.getType() == Cards.Type.Bank) {
+                    bankcount++;
+                }
+                if (card.getType() == Cards.Type.Venture) {
+                    venturecount++;
+                    coin += 1; //estimate: could draw potion or hornOfPlenty but also platinum
+                               //Patrick estimates in getCurrencyTotal(list) coin += 1
+                }
+            }
+        }
+        coin += bankcount * (treasurecards + venturecount) - (bankcount*bankcount + bankcount) / 2;
+        coin += context.player.getGuildsCoinTokenCount();
+        if(context.player.getMinusOneCoinToken() && coin > 0)
+            coin--;
        
-       return coin;
+        return coin;
     }
     
     protected Card bestCardInPlay(MoveContext context, int maxCost, boolean mustPick) {
@@ -2932,6 +2934,9 @@ public abstract class BasePlayer extends Player implements GameEventListener {
     		return coinTokenTotal;
     	
     	int gold = context.getCoinAvailableForBuy();
+    	if(getMinusOneCoinToken())
+    		gold--;
+
     	int coinTokenToSpend = 0;
     	
         if(game.isValidBuy(context, Cards.colony, gold + coinTokenTotal)) {
@@ -3233,6 +3238,10 @@ public abstract class BasePlayer extends Player implements GameEventListener {
         for(Card c : cards)
             cl.add(c);
         return lowestCard(context, cl, true);
+    }
+
+    public Card[] trade_cardsToTrash(MoveContext context) {
+        return pickOutCards(context.getPlayer().getHand(), 2, getTrashCards());
     }
 
 }

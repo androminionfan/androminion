@@ -265,6 +265,8 @@ public class Strings {
             statusText += getString(R.string.CardSetAsideOnIslandMat);
         } else if (event.gameEventType == GameEvent.Type.DeckPutIntoDiscardPile) {
             statusText += getString(R.string.DeckPutIntoDiscardPile);
+        } else if (event.gameEventType == GameEvent.Type.TravellerExchanged) {
+            statusText += getString(R.string.TravellerExchanged);
         } else if (event.gameEventType == GameEvent.Type.TurnJourneyTokenFaceUp) {
             statusText += getString(R.string.TurnJourneyTokenFaceUp);
         } else if (event.gameEventType == GameEvent.Type.TurnJourneyTokenFaceDown) {
@@ -1155,6 +1157,7 @@ public class Strings {
             getCardName(Cards.bonfire),
             getCardName(Cards.dungeon),
             getCardName(Cards.storyteller),
+            getCardName(Cards.trade),
             getCardName(Cards.treasureTrove)
         ));
         actionStringMap = new HashMap<String, String>();
