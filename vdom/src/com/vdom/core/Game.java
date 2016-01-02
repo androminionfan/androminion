@@ -738,14 +738,17 @@ public class Game {
                  * now that you have more cards to choose from. 
                  */
                 for (int clone = ((CardImpl) card).cloneCount; clone > 0; clone--) {
-                    durationCards.add((DurationCard) thisCard);
                     if(   thisCard.equals(Cards.amulet)
                        || thisCard.equals(Cards.dungeon)) {
                         allDurationAreSimple = false;
                     }
                     if(thisCard.equals(Cards.haven) || thisCard.equals(Cards.gear)) {
-                        durationCards.add(player.haven.remove(0));
+                        if(player.haven != null && player.haven.size() > 0) {
+                            durationCards.add((DurationCard) thisCard);
+                            durationCards.add(player.haven.remove(0));
+                        }
                     } else {
+                        durationCards.add((DurationCard) thisCard);
                         durationCards.add(Cards.curse); /*dummy*/
                     }
                 }
@@ -2279,7 +2282,8 @@ public class Game {
                     return;
                 }
 
-                if (event.getType() == GameEvent.Type.CardObtained || event.getType() == GameEvent.Type.BuyingCard) {
+                if (   (event.getType() == GameEvent.Type.CardObtained || event.getType() == GameEvent.Type.BuyingCard)
+                    && !event.card.isEvent() ) {
 
                     MoveContext context = event.getContext();
                     Player player = context.getPlayer();
