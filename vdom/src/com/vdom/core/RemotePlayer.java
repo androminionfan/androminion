@@ -623,7 +623,7 @@ public class RemotePlayer extends IndirectPlayer implements GameEventListener, E
             extras.add(islandSize);
             int nativeVillageSize = event.player.nativeVillage.size();
             extras.add(nativeVillageSize);
-        } else if (event.getType() == Type.PlayingAction || event.getType() == Type.PlayingDurationAction) {
+        } else if (event.getType() == Type.PlayingAction || event.getType() == Type.PlayingDurationAction || event.getType() == Type.CallingReserve) {
             playedCards.add(event.getCard());
             playedCardsNew.add(event.newCard);
         } else if (event.getType() == Type.PlayingCoin) {

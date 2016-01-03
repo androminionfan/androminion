@@ -20,6 +20,7 @@ public class GameEvent {
         PlayingAction, // Action card is about to be played by a player.
         PlayedAction, // Action card has just been played by a player.
         PlayingDurationAction, // Duration action card's next turn effects are about to occur for a player.
+        CallingReserve, // Reserve card called
         PlayingCoin, // Coin card is about to be played by a player.
         BuyingCard, // Buying a card in the buy phase.
         OverpayForCard, // Overpaying for a Guilds card.

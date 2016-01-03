@@ -528,8 +528,8 @@
     <string name="Port_desc">Wenn du diese Karte kaufst, nimm dir eine weitere Hafenstadt.</string>
     <string name="Ranger_name">Wildhüter</string>
     <string name="Ranger_desc">Drehe deinen Reise-Marker um.\nLiegt die Vorderseite oben: +5 Karten</string>
-    <string name="Ratcatcher_name">Ratcatcher</string>
-    <string name="Ratcatcher_desc">Put this on your Tavern mat. - At the start of your turn, you may call this, to trash a card from your hand.</string>
+    <string name="Ratcatcher_name">Rattenfänger</string>
+    <string name="Ratcatcher_desc">Lege diese Karte auf dein Wirtshaustableau.\nZu Beginn deines Zuges darfst du diese Karte von deinem Tableau aufrufen. Wenn du das tust, musst du eine Handkarte entsorgen.</string>
     <string name="Raze_name">Raze</string>
     <string name="Raze_desc">Trash this or a card from your hand. Look at a number of cards from the top of your deck equal to the cost in coins of the trashed card. Put one into your hand and discard the rest.</string>
     <string name="Relic_name">Relikt</string>

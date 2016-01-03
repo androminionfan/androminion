@@ -1725,7 +1725,7 @@ public abstract class Player {
     public abstract Card artificer_cardToObtain(MoveContext context, int cost);
     public abstract Card[] gear_cardsToSetAside(MoveContext context);
     public abstract AmuletOption amulet_chooseOption(MoveContext context);
-    public abstract Card amulet_cardToTrash(MoveContext context);
+    public abstract Card amuletRatcatcher_cardToTrash(MoveContext context, Card responsible);
     public abstract boolean traveller_shouldExchange(MoveContext context, Card traveller, Card exchange);
     public abstract boolean miser_shouldTakeTreasure(MoveContext context);
     public abstract int cleanup_wineMerchantToDiscard(MoveContext context, int wineMerchantTotal);

@@ -114,6 +114,7 @@
 	<string name="PlayingAction">Playing</string>
 	<string name="PlayedAction">Played</string>
 	<string name="PlayingDurationAction">Playing duration</string>
+	<string name="CallingReserve">Calling reserve</string>
 	<string name="PlayingCoin">Playing</string>
 	<string name="BuyingCard">Buying</string>
 	<string name="GuildsTokenObtained">Guilds token obtained</string>

@@ -785,7 +785,10 @@ public abstract class IndirectPlayer extends QuickPlayPlayer {
         if(context.isQuickPlay() && shouldAutoPlay_duration_cardToPlay(context)) {
             return super.duration_cardToPlay(context, cards);
         }
-        if (cards == null || cards.length <= 2) {
+        if (cards == null) {
+            return 0;
+        }
+        if (cards.length <= 2 && !Util.allReserve(cards)) {
             return 0;
         }
         return selectOption(context, Cards.prince, cards);
@@ -2565,13 +2568,13 @@ public abstract class IndirectPlayer extends QuickPlayPlayer {
     }
 
     @Override
-    public Card amulet_cardToTrash(MoveContext context) {
-        if(context.isQuickPlay() && shouldAutoPlay_amulet_cardToTrash(context)) {
-            return super.amulet_cardToTrash(context);
+    public Card amuletRatcatcher_cardToTrash(MoveContext context, Card responsible) {
+        if(context.isQuickPlay() && shouldAutoPlay_amuletRatcatcher_cardToTrash(context, responsible)) {
+            return super.amuletRatcatcher_cardToTrash(context, responsible);
         }
         SelectCardOptions sco = new SelectCardOptions().setCount(1).exactCount()
                 .setPickType(PickType.TRASH).setActionType(ActionType.TRASH)
-                .setCardResponsible(Cards.amulet);
+                .setCardResponsible(responsible);
         return getCardFromHand(context, sco);
     }
     

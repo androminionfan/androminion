@@ -422,6 +422,20 @@ public class Util {
         return false;
     }
 
+    /** Check if all cards are reserve or curse
+     * @return  true, if all cards are reserve
+     */
+    public static boolean allReserve(Card[] cards) {
+        boolean allReserve = true;
+        for(Card card : cards) {
+            if(!card.isReserve() && !card.equals(Cards.curse)) {
+                allReserve = false;
+                break;
+            }
+        }
+        return allReserve;
+    }
+
     public static ArrayList<Card> copy(CardList cards) {
         if (cards == null) {
             return null;

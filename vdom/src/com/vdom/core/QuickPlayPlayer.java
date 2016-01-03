@@ -809,7 +809,7 @@ public abstract class QuickPlayPlayer extends BasePlayer {
         return false;
     }
     
-    public boolean shouldAutoPlay_amulet_cardToTrash(MoveContext context) {
+    public boolean shouldAutoPlay_amuletRatcatcher_cardToTrash(MoveContext context, Card responsible) {
         return false;
     }
     

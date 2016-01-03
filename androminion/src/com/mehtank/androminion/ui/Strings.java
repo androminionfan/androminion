@@ -25,6 +25,7 @@ import com.vdom.comms.SelectCardOptions;
 import com.vdom.comms.SelectCardOptions.ActionType;
 import com.vdom.comms.SelectCardOptions.PickType;
 import com.vdom.core.Cards;
+import com.vdom.core.Util;
 import com.vdom.core.Player.AmuletOption;
 import com.vdom.core.Player.CountFirstOption;
 import com.vdom.core.Player.CountSecondOption;
@@ -257,6 +258,8 @@ public class Strings {
             statusText += getString(R.string.PlayedAction);
         } else if (event.gameEventType == GameEvent.Type.PlayingDurationAction) {
             statusText += getString(R.string.PlayingDurationAction);
+        } else if (event.gameEventType == GameEvent.Type.CallingReserve) {
+            statusText += getString(R.string.CallingReserve);
         } else if (event.gameEventType == GameEvent.Type.CardSetAside) {
             statusText += getString(R.string.CardSetAside);
         } else if (event.gameEventType == GameEvent.Type.CardSetAsideOnTavernMat) {
@@ -455,8 +458,10 @@ public class Strings {
         }
 
         if (card != null && getCardName(card).equals(getCardName(Cards.prince))) {
-            String[] strings2 = new String[(options.length - startIndex)/2];
-            for (int i = startIndex; i < options.length-1; i=i+2) {
+            boolean allReserve = Util.allReserve((Card[]) options);
+            String[] strings2 = new String[(options.length - startIndex)/2 + (allReserve?1:0)];
+            int i;
+            for (i = startIndex; i < options.length-1; i=i+2) {
                 if(options[i] != null && options[i+1] != null) {
                     if(   ((Card)options[i]).equals(Cards.haven)
                        || ((Card)options[i]).equals(Cards.gear) ) {
@@ -472,6 +477,9 @@ public class Strings {
                         strings2[(i - startIndex)/2] = getCardName((Card)options[i]);
                     }
                 }
+            }
+            if(allReserve) {
+                strings2[(i - startIndex)/2] = getString(R.string.pass);
             }
             return strings2;
         }
@@ -1161,6 +1169,7 @@ public class Strings {
             getCardName(Cards.bonfire),
             getCardName(Cards.dungeon),
             getCardName(Cards.pilgrimage),
+            getCardName(Cards.ratcatcher),
             getCardName(Cards.storyteller),
             getCardName(Cards.trade),
             getCardName(Cards.treasureTrove)

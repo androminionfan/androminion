@@ -762,6 +762,7 @@ public class ActionCardImpl extends CardImpl implements ActionCard {
                 disciple(game, context, currentPlayer);
                 break;
             case DistantLands:
+            case Ratcatcher:
             case Teacher:
             case WineMerchant:
                 putOnTavern(game, context, currentPlayer);
@@ -6052,7 +6053,7 @@ public class ActionCardImpl extends CardImpl implements ActionCard {
                     return;
                 }
 
-                Card cardToTrash = currentPlayer.controlPlayer.amulet_cardToTrash(context);
+                Card cardToTrash = currentPlayer.controlPlayer.amuletRatcatcher_cardToTrash(context, this.controlCard);
                 if (cardToTrash == null) {
                     Util.playerError(currentPlayer, "Amulet card to trash was null, not trashing anything.");
                 } else if (!currentPlayer.hand.contains(cardToTrash)) {

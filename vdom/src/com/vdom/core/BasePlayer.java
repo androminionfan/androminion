@@ -3168,8 +3168,12 @@ public abstract class BasePlayer extends Player implements GameEventListener {
     }
 
     @Override
-    public Card amulet_cardToTrash(MoveContext context) {
-        return pickOutCard(context.getPlayer().getHand(), getTrashCards());
+    public Card amuletRatcatcher_cardToTrash(MoveContext context, Card responsible) {
+        Card card = pickOutCard(context.getPlayer().getHand(), getTrashCards());
+        if (card == null) {
+            card = lowestCard(context, context.getPlayer().getHand(), false);
+        }
+        return card;
     }
 
     @Override

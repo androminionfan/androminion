@@ -712,7 +712,7 @@ public class Game {
         GameEvent gevent = new GameEvent(GameEvent.Type.TurnBegin, context);
         broadcastEvent(gevent);
 
-        /* Duration cards, horse traders, cards on prince*/
+        /* Duration cards, horse traders, cards on prince, cards on tavern */
         
         /* selectOption() must know if horse traders are set aside by reaction or by haven/gear or by prince.
          * We put 2 cards in list durationCards to differentiate:
@@ -722,6 +722,7 @@ public class Game {
          * Gear - Card set aside by haven or gear
          * Prince - Card set aside by prince
          * other Durations like Wharf - (Curse)
+         * Ratcatcher - (Curse)
          */
         boolean allDurationAreSimple = true;
         ArrayList<Card> durationCards = new ArrayList<Card>();
@@ -778,6 +779,13 @@ public class Game {
             durationCards.add((DurationCard) Cards.gear);
             durationCards.add(player.haven.remove(0));
         }
+        for (Card card : player.tavern) {
+            if (card.equals(Cards.ratcatcher)) {
+                allDurationAreSimple = false;
+                durationCards.add(card);
+                durationCards.add(Cards.curse); /*dummy*/
+            }
+        }
         
         while (!durationCards.isEmpty()) {
         	int selection=0;
@@ -785,6 +793,10 @@ public class Game {
             	selection=0;
             } else {
             	selection = 2*player.controlPlayer.duration_cardToPlay(context, durationCards.toArray(new Card[durationCards.size()]));
+            }
+            if(selection >= durationCards.size()) {
+                /*pass*/
+                break;
             }
             Card card = durationCards.get(selection);
             if (card == null) {
@@ -818,6 +830,24 @@ public class Game {
                 Card horseTrader = player.horseTraders.remove(0);
                 player.hand.add(horseTrader);
                 drawToHand(player, horseTrader);
+            } else if(card.equals(Cards.ratcatcher)) {
+                player.playedCards.add(card);
+                player.tavern.remove(card);
+                GameEvent event = new GameEvent(GameEvent.Type.CallingReserve, context);
+                event.card = card;
+                broadcastEvent(event);
+                CardList hand = player.getHand();
+                if (hand.size() != 0) {
+                    Card cardToTrash = player.controlPlayer.amuletRatcatcher_cardToTrash(context, card);
+                    if (cardToTrash == null) {
+                        Util.playerError(player, "Ratcatcher card to trash was null, not trashing anything.");
+                    } else if (!player.hand.contains(cardToTrash)) {
+                        Util.playerError(player, "Ratcatcher card to trash is not in your hand, not trashing anything.");
+                    } else {
+                        player.hand.remove(cardToTrash);
+                        player.trash(cardToTrash, card, context);
+                    }
+                }
             } else if(card instanceof DurationCard) {
                 if(card.equals(Cards.haven) || card.equals(Cards.gear)) {
                     player.hand.add(card2);
